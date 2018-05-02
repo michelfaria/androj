@@ -4,12 +4,13 @@ import command.Command;
 import command.handler.AbstractCommandHandler;
 import command.handler.CommandHandlingFacade;
 import command.handler.RegisteredCommandHandler;
-import command.handler.strategy.DecoratedReplier;
+import command.strategy.DecoratedReplier;
 import component.BotConfig;
 import component.command.CommandHandlingFacadeBuilder;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Component;
 
@@ -31,7 +32,7 @@ public class BombCommandHandler extends AbstractCommandHandler implements Regist
                               CutWireCommandHandler cutWireCommandHandler) {
         this.facade = builder
                 .setCmdId("bomb")
-                .setReplier(new DecoratedReplier(builder.getTextFormatter(), ":bomb:"))
+                .setReplier(new DecoratedReplier(":bomb:"))
                 .setSyntaxSupplier(() -> "<user>")
                 .setValidatedCommandHandler(this::handle_)
                 .build();
@@ -90,6 +91,7 @@ public class BombCommandHandler extends AbstractCommandHandler implements Regist
         return botConfig.getPrefix() + cutWireCommandHandler.getCommandId();
     }
 
+    @NotNull
     @Override
     public CommandHandlingFacade getFacade() {
         return facade;

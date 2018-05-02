@@ -4,9 +4,10 @@ import command.Command;
 import command.handler.AbstractCommandHandler;
 import command.handler.CommandHandlingFacade;
 import command.handler.RegisteredCommandHandler;
-import command.handler.strategy.DecoratedReplier;
-import command.handler.validation.MinArgsValidator;
+import command.strategy.DecoratedReplier;
+import command.validation.MinArgsValidator;
 import component.command.CommandHandlingFacadeBuilder;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Component;
@@ -27,7 +28,7 @@ public class UrbanDictCommandHandler extends AbstractCommandHandler implements R
         this.facade = builder.setCmdId("udict")
                 .setValidatedCommandHandler(this::handle_)
                 .setValidators(Arrays.asList(new MinArgsValidator(1)))
-                .setReplier(new DecoratedReplier(builder.getTextFormatter(), ":book:"))
+                .setReplier(new DecoratedReplier(":book:"))
                 .setSyntaxSupplier(() -> "<term>")
                 .build();
         this.urbanDict = urbanDict;
@@ -38,6 +39,7 @@ public class UrbanDictCommandHandler extends AbstractCommandHandler implements R
         return "Define something!";
     }
 
+    @NotNull
     @Override
     public CommandHandlingFacade getFacade() {
         return facade;

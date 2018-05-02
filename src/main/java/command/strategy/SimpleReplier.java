@@ -1,4 +1,4 @@
-package command.handler.strategy;
+package command.strategy;
 
 import net.dv8tion.jda.core.entities.Message;
 import org.jetbrains.annotations.Nullable;

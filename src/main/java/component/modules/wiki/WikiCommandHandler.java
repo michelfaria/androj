@@ -5,9 +5,10 @@ import command.Command;
 import command.handler.AbstractCommandHandler;
 import command.handler.CommandHandlingFacade;
 import command.handler.RegisteredCommandHandler;
-import command.handler.strategy.SuppliedDecorationReplier;
-import command.handler.validation.MinArgsValidator;
+import command.strategy.SuppliedDecorationReplier;
+import command.validation.MinArgsValidator;
 import component.command.CommandHandlingFacadeBuilder;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Component;
@@ -38,8 +39,7 @@ public class WikiCommandHandler extends AbstractCommandHandler implements Regist
         this.facade = builder
                 .setCmdId("wiki")
                 .setValidatedCommandHandler(this::handle_)
-                .setReplier(new SuppliedDecorationReplier(
-                        builder.getTextFormatter(), () -> decorators.get(random.nextInt(decorators.size()))))
+                .setReplier(new SuppliedDecorationReplier(() -> decorators.get(random.nextInt(decorators.size()))))
                 .setSyntaxSupplier(() -> "<term>")
                 .setValidators(Arrays.asList(new MinArgsValidator(1)))
                 .build();
@@ -60,6 +60,7 @@ public class WikiCommandHandler extends AbstractCommandHandler implements Regist
         }
     }
 
+    @NotNull
     @Override
     public CommandHandlingFacade getFacade() {
         return facade;

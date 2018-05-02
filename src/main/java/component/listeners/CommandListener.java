@@ -13,7 +13,7 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Component
-public class CommandListener extends ListenerAdapter {
+public class CommandListener extends ListenerAdapter implements BotListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CommandListener.class);
 

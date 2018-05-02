@@ -5,6 +5,7 @@ import command.handler.AbstractCommandHandler;
 import command.handler.CommandHandlingFacade;
 import command.handler.RegisteredCommandHandler;
 import component.command.CommandHandlingFacadeBuilder;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +25,7 @@ public class TestCommandHandler extends AbstractCommandHandler implements Regist
         replyTo(c, "Hello world!");
     }
 
+    @NotNull
     @Override
     public CommandHandlingFacade getFacade() {
         return this.facade;

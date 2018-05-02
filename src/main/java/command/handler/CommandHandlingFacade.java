@@ -1,10 +1,10 @@
 package command.handler;
 
 import command.Command;
-import command.handler.strategy.Replier;
-import command.handler.strategy.ValidatedCommandHandler;
-import command.handler.strategy.ValidationFailureHandler;
-import command.handler.validation.Validator;
+import command.strategy.Replier;
+import command.strategy.ValidatedCommandHandler;
+import command.strategy.ValidationFailureHandler;
+import command.validation.Validator;
 import component.formatter.TextFormatter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

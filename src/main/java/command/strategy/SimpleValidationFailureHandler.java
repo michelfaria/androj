@@ -1,4 +1,4 @@
-package command.handler.strategy;
+package command.strategy;
 
 import command.Command;
 import component.formatter.TextFormatter;

@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class ReadyLogger extends ListenerAdapter {
-    private static final Logger L = LoggerFactory.getLogger(ReadyLogger.class);
+public class ReadyLogger extends ListenerAdapter implements BotListener {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReadyLogger.class);
 
     @Override
     public void onReady(ReadyEvent event) {
@@ -24,7 +24,7 @@ public class ReadyLogger extends ListenerAdapter {
         appendUserInfo(event, sb);
         appendOAuthInfo(event, sb);
         appendGuilds(event, sb);
-        L.info(sb.toString());
+        LOGGER.info(sb.toString());
     }
 
     private void appendUserInfo(ReadyEvent event, StringBuilder sb) {

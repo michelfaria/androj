@@ -1,4 +1,4 @@
-package command.handler.strategy;
+package command.strategy;
 
 import command.Command;
 import net.dv8tion.jda.core.entities.Message;

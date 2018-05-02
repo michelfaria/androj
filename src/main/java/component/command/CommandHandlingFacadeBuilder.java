@@ -1,11 +1,11 @@
 package component.command;
 
 import command.handler.CommandHandlingFacade;
-import command.handler.strategy.Replier;
-import command.handler.strategy.SimpleValidationFailureHandler;
-import command.handler.strategy.ValidatedCommandHandler;
-import command.handler.strategy.ValidationFailureHandler;
-import command.handler.validation.Validator;
+import command.strategy.Replier;
+import command.strategy.SimpleValidationFailureHandler;
+import command.strategy.ValidatedCommandHandler;
+import command.strategy.ValidationFailureHandler;
+import command.validation.Validator;
 import component.formatter.TextFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;

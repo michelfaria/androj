@@ -1,4 +1,4 @@
-package command.handler.validation;
+package command.validation;
 
 public class NoArgsValidator extends ArgLengthValidator {
     public NoArgsValidator() {

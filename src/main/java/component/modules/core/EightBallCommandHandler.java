@@ -4,8 +4,9 @@ import command.Command;
 import command.handler.AbstractCommandHandler;
 import command.handler.CommandHandlingFacade;
 import command.handler.RegisteredCommandHandler;
-import command.handler.strategy.DecoratedReplier;
+import command.strategy.DecoratedReplier;
 import component.command.CommandHandlingFacadeBuilder;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -47,7 +48,7 @@ public class EightBallCommandHandler extends AbstractCommandHandler implements R
     public EightBallCommandHandler(CommandHandlingFacadeBuilder builder, Random random) {
         this.random = random;
         this.facade = builder.setCmdId("8ball")
-                .setReplier(new DecoratedReplier(builder.getTextFormatter(), ":8ball:"))
+                .setReplier(new DecoratedReplier(":8ball:"))
                 .setValidatedCommandHandler(this::handle_)
                 .build();
     }
@@ -57,6 +58,7 @@ public class EightBallCommandHandler extends AbstractCommandHandler implements R
         return "I can answer any of your questions...";
     }
 
+    @NotNull
     @Override
     public CommandHandlingFacade getFacade() {
         return facade;

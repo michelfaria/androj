@@ -4,9 +4,10 @@ import command.Command;
 import command.handler.AbstractCommandHandler;
 import command.handler.CommandHandlingFacade;
 import command.handler.RegisteredCommandHandler;
-import command.handler.strategy.DecoratedReplier;
-import command.handler.validation.ArgLengthValidator;
+import command.strategy.DecoratedReplier;
+import command.validation.ArgLengthValidator;
 import component.command.CommandHandlingFacadeBuilder;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Component;
@@ -28,7 +29,7 @@ public class CutWireCommandHandler extends AbstractCommandHandler implements Reg
     public CutWireCommandHandler(CommandHandlingFacadeBuilder builder, BombService bombService) {
         this.facade = builder
                 .setCmdId("cutwire")
-                .setReplier(new DecoratedReplier(builder.getTextFormatter(), ":scissors:"))
+                .setReplier(new DecoratedReplier(":scissors:"))
                 .setSyntaxSupplier(() -> "<color>")
                 .setValidators(Arrays.asList(new ArgLengthValidator(1)))
                 .setValidatedCommandHandler(this::handle_)
@@ -54,6 +55,7 @@ public class CutWireCommandHandler extends AbstractCommandHandler implements Reg
         });
     }
 
+    @NotNull
     @Override
     public CommandHandlingFacade getFacade() {
         return facade;

@@ -4,10 +4,11 @@ import command.Command;
 import command.handler.AbstractCommandHandler;
 import command.handler.CommandHandler;
 import command.handler.CommandHandlingFacade;
-import command.handler.strategy.DecoratedReplier;
-import command.handler.strategy.Replier;
-import command.handler.validation.NoArgsValidator;
+import command.strategy.DecoratedReplier;
+import command.strategy.Replier;
+import command.validation.NoArgsValidator;
 import component.command.CommandHandlingFacadeBuilder;
+import org.jetbrains.annotations.NotNull;
 import util.PickRandom;
 
 import java.util.Arrays;
@@ -28,7 +29,7 @@ public abstract class SubredditCommandHandler extends AbstractCommandHandler imp
         this.reddit = reddit;
         this.facade = builder.setCmdId(cmdId)
                 .setReplier(
-                        new DecoratedReplier(builder.getTextFormatter(), ":globe_with_meridians:", Replier.getDefault()))
+                        new DecoratedReplier(":globe_with_meridians:"))
                 .setValidators(Arrays.asList(new NoArgsValidator()))
                 .setValidatedCommandHandler(this::handle_)
                 .build();
@@ -45,6 +46,7 @@ public abstract class SubredditCommandHandler extends AbstractCommandHandler imp
                 + "\n\n" + response.getSelfText();
     }
 
+    @NotNull
     @Override
     public CommandHandlingFacade getFacade() {
         return facade;

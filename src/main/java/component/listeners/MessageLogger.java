@@ -10,16 +10,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ConditionalOnBean(MessageLoggerConfig.class)
-public class MessageLogger extends ListenerAdapter {
+public class MessageLogger extends ListenerAdapter implements BotListener {
 
-    private static final Logger L = LoggerFactory.getLogger(MessageLogger.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessageLogger.class);
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         String s = "[" + event.getGuild().getName() + "] [#" + event.getChannel().getName() + "] <"
                 + event.getAuthor().getName() + "> (" + event.getAuthor().getId() + ") => "
                 + event.getMessage().getContentRaw();
-        L.info(s);
+        LOGGER.info(s);
     }
 
 }

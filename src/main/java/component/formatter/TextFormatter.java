@@ -12,4 +12,8 @@ public interface TextFormatter {
     String code(String s);
 
     String codeBlock(String language, String s);
+
+     static TextFormatter getDefault() {
+        return new DiscordTextFormatter();
+    }
 }

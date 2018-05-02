@@ -1,10 +1,10 @@
 package component;
 
+import component.listeners.BotListener;
 import lombok.Getter;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,21 +12,23 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class Client {
-    private static final Logger L = LoggerFactory.getLogger(Client.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Client.class);
 
     private final BotConfig cfg;
-    private final List<ListenerAdapter> eventListeners;
+    private final List<BotListener> eventListeners;
     private final Environment env;
 
     @Getter
     private JDA jda;
 
     @Autowired
-    public Client(BotConfig cfg, List<ListenerAdapter> eventListeners, Environment env) {
+    public Client(BotConfig cfg, List<BotListener> eventListeners, Environment env) {
         this.cfg = cfg;
         this.eventListeners = eventListeners;
         this.env = env;
@@ -34,6 +36,8 @@ public class Client {
 
     @PostConstruct
     public void init() {
+        orderEventListeners();
+        LOGGER.info("Event listeners: " + eventListeners.stream().map(Object::toString).collect(Collectors.joining("\n")));
         promptIfNoToken();
         try {
             this.jda = new JDABuilder(AccountType.BOT)
@@ -41,8 +45,12 @@ public class Client {
                     .addEventListener(eventListeners.toArray())
                     .buildBlocking();
         } catch (Exception ex) {
-            L.error("Could not log in replyTo Discord! Error: " + ex.getMessage());
+            LOGGER.error("Could not log in replyTo Discord! Error: " + ex.getMessage());
         }
+    }
+
+    private void orderEventListeners() {
+        eventListeners.sort((a, b) -> -Integer.compare(a.priority(), b.priority()));
     }
 
     public void promptIfNoToken() {
