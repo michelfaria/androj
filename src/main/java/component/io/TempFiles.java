@@ -2,6 +2,7 @@ package component.io;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Base64;
 
 public interface TempFiles {
@@ -17,4 +18,6 @@ public interface TempFiles {
     }
 
     File create(byte[] content) throws IOException;
+
+    Path tempPath();
 }
