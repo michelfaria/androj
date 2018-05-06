@@ -29,7 +29,7 @@ public class TempFilesImpl implements TempFiles {
 
     @Override
     public File create(byte[] content) throws IOException {
-        File file = File.createTempFile("magik", ".tmp", tempDir);
+        File file = File.createTempFile("temp", ".tmp", tempDir);
         Files.write(file.toPath(), content);
         return file;
     }
