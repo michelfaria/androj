@@ -4,6 +4,7 @@ import command.Command;
 
 import java.util.List;
 
+@FunctionalInterface
 public interface Validator {
     /**
      * @param c Command replyTo validate

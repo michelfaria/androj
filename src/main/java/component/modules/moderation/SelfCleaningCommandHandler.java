@@ -29,7 +29,7 @@ public class SelfCleaningCommandHandler extends AbstractCommandHandler implement
         GuildPermissionValidator permissionValidator = permissionValidatorBuilder
                 .setRequiredPermissions(Collections.singletonList(Permission.MESSAGE_MANAGE))
                 .build();
-        this.facade = builder.setCmdId("cleanup")
+        this.facade = builder.setCmdId("clean")
                 .setValidators(Arrays.asList(
                         permissionValidator,
                         new MaxArgsValidator(1),

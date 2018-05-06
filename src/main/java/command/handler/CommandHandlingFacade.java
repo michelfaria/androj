@@ -9,6 +9,7 @@ import component.formatter.TextFormatter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.exceptions.InsufficientPermissionException;
 import net.dv8tion.jda.core.requests.RestAction;
 
 import java.util.ArrayList;
@@ -36,6 +37,8 @@ public class CommandHandlingFacade {
             } else {
                 try {
                     validatedCommandHandler.accept(c);
+                } catch (InsufficientPermissionException ex) {
+                    replier.replyTo(c, "I don't have permission to do that :( I need permission to: " + ex.getPermission().getName() + ".");
                 } catch (Exception ex) {
                     replier.replyTo(c.getEvent().getMessage(),
                             "An internal error occurred. Please report to the bot owner.");
