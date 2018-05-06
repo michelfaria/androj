@@ -17,46 +17,43 @@ import java.util.Objects;
 @Component
 @ConditionalOnBean(RedditConfig.class)
 public class RedditClientFactoryBean implements FactoryBean<RedditClient> {
-    private static final Logger L = LoggerFactory.getLogger(RedditClientFactoryBean.class);
+	private static final Logger L = LoggerFactory.getLogger(RedditClientFactoryBean.class);
 
-    private RedditConfig cfg;
+	private RedditConfig cfg;
 
-    @Autowired
-    public RedditClientFactoryBean(RedditConfig cfg) {
-        this.cfg = cfg;
-    }
+	@Autowired
+	public RedditClientFactoryBean(RedditConfig cfg) {
+		this.cfg = cfg;
+	}
 
-    @Override
-    public RedditClient getObject() {
-        RedditClient redditClient = redditClient(credentials(), userAgent());
-        redditClient.setLogHttp(false);
-        L.info("Logged in Reddit: " + redditClient.me().about());
-        return redditClient;
-    }
+	@Override
+	public RedditClient getObject() {
+		RedditClient redditClient = redditClient(credentials(), userAgent());
+		redditClient.setLogHttp(false);
+		L.info("Logged in Reddit: " + redditClient.me().about());
+		return redditClient;
+	}
 
-    private RedditClient redditClient(Credentials credentials, UserAgent userAgent) {
-        return OAuthHelper.automatic(new OkHttpNetworkAdapter(userAgent), credentials);
-    }
+	private RedditClient redditClient(Credentials credentials, UserAgent userAgent) {
+		return OAuthHelper.automatic(new OkHttpNetworkAdapter(userAgent), credentials);
+	}
 
-    private Credentials credentials() {
-        return Credentials.script(
-                Objects.requireNonNull(cfg.getUsername()),
-                Objects.requireNonNull(cfg.getPassword()),
-                Objects.requireNonNull(cfg.getClientId()),
-                Objects.requireNonNull(cfg.getClientSecret()));
-    }
+	private Credentials credentials() {
+		return Credentials.script(Objects.requireNonNull(cfg.getUsername()), Objects.requireNonNull(cfg.getPassword()),
+				Objects.requireNonNull(cfg.getClientId()), Objects.requireNonNull(cfg.getClientSecret()));
+	}
 
-    private UserAgent userAgent() {
-        return new UserAgent("bot", "my.cool.bot", "1.0.0", Objects.requireNonNull(cfg.getUsername()));
-    }
+	private UserAgent userAgent() {
+		return new UserAgent("bot", "my.cool.bot", "1.0.0", Objects.requireNonNull(cfg.getUsername()));
+	}
 
-    @Override
-    public Class<?> getObjectType() {
-        return RedditClient.class;
-    }
+	@Override
+	public Class<?> getObjectType() {
+		return RedditClient.class;
+	}
 
-    @Override
-    public boolean isSingleton() {
-        return true;
-    }
+	@Override
+	public boolean isSingleton() {
+		return true;
+	}
 }

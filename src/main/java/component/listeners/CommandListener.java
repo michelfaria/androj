@@ -15,32 +15,31 @@ import java.util.List;
 @Component
 public class CommandListener extends ListenerAdapter implements BotListener {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CommandListener.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(CommandListener.class);
 
-    private final CommandParser commandParser;
-    private final List<RegisteredCommandHandler> registeredCommandHandlers;
+	private final CommandParser commandParser;
+	private final List<RegisteredCommandHandler> registeredCommandHandlers;
 
-    @Autowired
-    public CommandListener(CommandParser commandParser, List<RegisteredCommandHandler> registeredCommandHandlers) {
-        this.commandParser = commandParser;
-        this.registeredCommandHandlers = registeredCommandHandlers;
-    }
+	@Autowired
+	public CommandListener(CommandParser commandParser, List<RegisteredCommandHandler> registeredCommandHandlers) {
+		this.commandParser = commandParser;
+		this.registeredCommandHandlers = registeredCommandHandlers;
+	}
 
-    @PostConstruct
-    public void init() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Registered command handlers:\n");
-        registeredCommandHandlers.forEach(r -> {
-            sb.append("\t-> ");
-            sb.append(r.getCommandId());
-            sb.append("\n");
-        });
-        LOGGER.info(sb.toString());
-    }
+	@PostConstruct
+	public void init() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Registered command handlers:\n");
+		registeredCommandHandlers.forEach(r -> {
+			sb.append("\t-> ");
+			sb.append(r.getCommandId());
+			sb.append("\n");
+		});
+		LOGGER.info(sb.toString());
+	}
 
-    @Override
-    public void onMessageReceived(MessageReceivedEvent event) {
-        commandParser.parse(event)
-                .ifPresent(c -> registeredCommandHandlers.forEach(h -> h.handle(c)));
-    }
+	@Override
+	public void onMessageReceived(MessageReceivedEvent event) {
+		commandParser.parse(event).ifPresent(c -> registeredCommandHandlers.forEach(h -> h.handle(c)));
+	}
 }

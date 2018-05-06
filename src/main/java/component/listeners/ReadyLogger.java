@@ -11,47 +11,47 @@ import java.util.List;
 
 @Component
 public class ReadyLogger extends ListenerAdapter implements BotListener {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReadyLogger.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ReadyLogger.class);
 
-    @Override
-    public void onReady(ReadyEvent event) {
-        super.onReady(event);
-        logReadyMessage(event);
-    }
+	@Override
+	public void onReady(ReadyEvent event) {
+		super.onReady(event);
+		logReadyMessage(event);
+	}
 
-    private void logReadyMessage(ReadyEvent event) {
-        StringBuilder sb = new StringBuilder();
-        appendUserInfo(event, sb);
-        appendOAuthInfo(event, sb);
-        appendGuilds(event, sb);
-        LOGGER.info(sb.toString());
-    }
+	private void logReadyMessage(ReadyEvent event) {
+		StringBuilder sb = new StringBuilder();
+		appendUserInfo(event, sb);
+		appendOAuthInfo(event, sb);
+		appendGuilds(event, sb);
+		LOGGER.info(sb.toString());
+	}
 
-    private void appendUserInfo(ReadyEvent event, StringBuilder sb) {
-        sb.append("I am connected replyTo Discord!\nUsername: ");
-        sb.append(event.getJDA().getSelfUser().getName());
-    }
+	private void appendUserInfo(ReadyEvent event, StringBuilder sb) {
+		sb.append("I am connected replyTo Discord!\nUsername: ");
+		sb.append(event.getJDA().getSelfUser().getName());
+	}
 
-    private void appendOAuthInfo(ReadyEvent event, StringBuilder sb) {
-        sb.append("\nOAuth2 URL: ");
-        sb.append("https://discordapp.com/oauth2/authorize?client_id=");
-        sb.append(event.getJDA().getSelfUser().getId());
-        sb.append("&permissions=70384705&scope=bot");
-    }
+	private void appendOAuthInfo(ReadyEvent event, StringBuilder sb) {
+		sb.append("\nOAuth2 URL: ");
+		sb.append("https://discordapp.com/oauth2/authorize?client_id=");
+		sb.append(event.getJDA().getSelfUser().getId());
+		sb.append("&permissions=70384705&scope=bot");
+	}
 
-    private void appendGuilds(ReadyEvent event, StringBuilder sb) {
-        List<Guild> guilds = event.getJDA().getGuilds();
-        sb.append("\nGuilds: ");
-        sb.append(guilds.size());
-        sb.append("\n");
+	private void appendGuilds(ReadyEvent event, StringBuilder sb) {
+		List<Guild> guilds = event.getJDA().getGuilds();
+		sb.append("\nGuilds: ");
+		sb.append(guilds.size());
+		sb.append("\n");
 
-        guilds.forEach(guild -> {
-            sb.append("\t* ");
-            sb.append(guild.getName());
-            sb.append(" :: ");
-            sb.append(guild.getOwner().getUser().getName());
-            sb.append("\n");
-        });
-    }
+		guilds.forEach(guild -> {
+			sb.append("\t* ");
+			sb.append(guild.getName());
+			sb.append(" :: ");
+			sb.append(guild.getOwner().getUser().getName());
+			sb.append("\n");
+		});
+	}
 
 }

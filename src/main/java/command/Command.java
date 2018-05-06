@@ -7,13 +7,13 @@ import java.util.List;
 
 @Data
 public class Command {
-    private String id;
-    private List<String> args;
-    private MessageReceivedEvent event;
+	private String id;
+	private List<String> args;
+	private MessageReceivedEvent event;
 
-    public Command(String id, List<String> args, MessageReceivedEvent event) {
-        this.id = id;
-        this.args = args;
-        this.event = event;
-    }
+	public Command(String id, List<String> args, MessageReceivedEvent event) {
+		this.id = id;
+		this.args = args;
+		this.event = event;
+	}
 }

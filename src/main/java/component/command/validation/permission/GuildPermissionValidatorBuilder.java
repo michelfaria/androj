@@ -17,25 +17,25 @@ import java.util.List;
 @Getter
 public class GuildPermissionValidatorBuilder {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GuildPermissionValidator.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(GuildPermissionValidator.class);
 
-    private BotConfig botConfig;
-    private List<Permission> requiredPermissions = new ArrayList<>();
+	private BotConfig botConfig;
+	private List<Permission> requiredPermissions = new ArrayList<>();
 
-    @Autowired
-    public GuildPermissionValidatorBuilder(BotConfig botConfig) {
-        this.botConfig = botConfig;
-    }
+	@Autowired
+	public GuildPermissionValidatorBuilder(BotConfig botConfig) {
+		this.botConfig = botConfig;
+	}
 
-    public GuildPermissionValidator build() {
-        if (requiredPermissions.isEmpty()) {
-            LOGGER.warn(GuildPermissionValidator.class.getName() + " created without any required permissions!");
-        }
-        return new GuildPermissionValidator(botConfig, requiredPermissions);
-    }
+	public GuildPermissionValidator build() {
+		if (requiredPermissions.isEmpty()) {
+			LOGGER.warn(GuildPermissionValidator.class.getName() + " created without any required permissions!");
+		}
+		return new GuildPermissionValidator(botConfig, requiredPermissions);
+	}
 
-    public GuildPermissionValidatorBuilder setRequiredPermissions(List<Permission> requiredPermissions) {
-        this.requiredPermissions = requiredPermissions;
-        return this;
-    }
+	public GuildPermissionValidatorBuilder setRequiredPermissions(List<Permission> requiredPermissions) {
+		this.requiredPermissions = requiredPermissions;
+		return this;
+	}
 }

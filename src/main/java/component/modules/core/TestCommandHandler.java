@@ -12,22 +12,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class TestCommandHandler extends AbstractCommandHandler implements RegisteredCommandHandler {
 
-    private CommandHandlingFacade facade;
+	private CommandHandlingFacade facade;
 
-    @Autowired
-    public TestCommandHandler(CommandHandlingFacadeBuilder builder) {
-        this.facade = builder.setCmdId("test")
-                .setValidatedCommandHandler(this::handle_)
-                .build();
-    }
+	@Autowired
+	public TestCommandHandler(CommandHandlingFacadeBuilder builder) {
+		this.facade = builder.setCmdId("test").setValidatedCommandHandler(this::handle_).build();
+	}
 
-    public void handle_(Command c) {
-        replyTo(c, "Hello world!");
-    }
+	public void handle_(Command c) {
+		replyTo(c, "Hello world!");
+	}
 
-    @NotNull
-    @Override
-    public CommandHandlingFacade getFacade() {
-        return this.facade;
-    }
+	@NotNull
+	@Override
+	public CommandHandlingFacade getFacade() {
+		return this.facade;
+	}
 }

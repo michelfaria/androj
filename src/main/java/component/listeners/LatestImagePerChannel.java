@@ -18,42 +18,40 @@ import java.util.List;
 @Component
 public class LatestImagePerChannel extends ListenerAdapter implements BotListener {
 
-    private LatestImageService latestImageService;
+	private LatestImageService latestImageService;
 
-    @Autowired
-    public LatestImagePerChannel(LatestImageService latestImageService) {
-        this.latestImageService = latestImageService;
-    }
+	@Autowired
+	public LatestImagePerChannel(LatestImageService latestImageService) {
+		this.latestImageService = latestImageService;
+	}
 
-    @Override
-    public void onMessageReceived(MessageReceivedEvent event) {
-        List<Icon> imageAttachments = getImageAttachments(event.getMessage());
-        if (!imageAttachments.isEmpty()) {
-            // put last image on the map
-            latestImageService.put(
-                    event.getChannel(),
-                    imageAttachments.get(imageAttachments.size() - 1));
-        }
-    }
+	@Override
+	public void onMessageReceived(MessageReceivedEvent event) {
+		List<Icon> imageAttachments = getImageAttachments(event.getMessage());
+		if (!imageAttachments.isEmpty()) {
+			// put last image on the map
+			latestImageService.put(event.getChannel(), imageAttachments.get(imageAttachments.size() - 1));
+		}
+	}
 
-    private List<Icon> getImageAttachments(Message message) {
-        List<Icon> imageAttachments = new ArrayList<>();
-        List<Message.Attachment> attachments = message.getAttachments();
-        for (Message.Attachment attachment : attachments) {
-            if (attachment.isImage()) {
-                try {
-                    Icon image = attachment.getAsIcon();
-                    imageAttachments.add(image);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return imageAttachments;
-    }
+	private List<Icon> getImageAttachments(Message message) {
+		List<Icon> imageAttachments = new ArrayList<>();
+		List<Message.Attachment> attachments = message.getAttachments();
+		for (Message.Attachment attachment : attachments) {
+			if (attachment.isImage()) {
+				try {
+					Icon image = attachment.getAsIcon();
+					imageAttachments.add(image);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return imageAttachments;
+	}
 
-    @Override
-    public int priority() {
-        return 1;
-    }
+	@Override
+	public int priority() {
+		return 1;
+	}
 }

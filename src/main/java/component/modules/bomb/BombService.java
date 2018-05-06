@@ -7,10 +7,10 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 public interface BombService {
-    Optional<Bomb> bombFor(User victim);
+	Optional<Bomb> bombFor(User victim);
 
-    Bomb putBombOn(User victim, TextChannel channel, Consumer<Bomb> onExplode, Consumer<Bomb> onDefuse)
-            throws VictimAlreadyHasBombException;
+	Bomb putBombOn(User victim, TextChannel channel, Consumer<Bomb> onExplode, Consumer<Bomb> onDefuse)
+			throws VictimAlreadyHasBombException;
 
-    boolean hasBomb(User victim);
+	boolean hasBomb(User victim);
 }

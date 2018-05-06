@@ -3,5 +3,5 @@ package command.strategy;
 import command.Command;
 
 public interface ValidatedCommandHandler {
-    void accept(Command c);
+	void accept(Command c);
 }

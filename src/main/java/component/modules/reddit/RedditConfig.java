@@ -10,15 +10,15 @@ import org.springframework.stereotype.Component;
 @ConditionalOnProperty("bot.reddit.enabled")
 public class RedditConfig {
 
-    @Value("${bot.reddit.username}")
-    private String username;
+	@Value("${bot.reddit.username}")
+	private String username;
 
-    @Value("${bot.reddit.password}")
-    private String password;
+	@Value("${bot.reddit.password}")
+	private String password;
 
-    @Value("${bot.reddit.clientId}")
-    private String clientId;
+	@Value("${bot.reddit.clientId}")
+	private String clientId;
 
-    @Value("${bot.reddit.clientSecret}")
-    private String clientSecret;
+	@Value("${bot.reddit.clientSecret}")
+	private String clientSecret;
 }

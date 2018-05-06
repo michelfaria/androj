@@ -4,7 +4,7 @@ import net.dv8tion.jda.core.entities.Icon;
 import net.dv8tion.jda.core.entities.MessageChannel;
 
 public interface LatestImageService {
-    Icon put(MessageChannel key, Icon value);
+	Icon put(MessageChannel key, Icon value);
 
-    Icon get(MessageChannel key);
+	Icon get(MessageChannel key);
 }

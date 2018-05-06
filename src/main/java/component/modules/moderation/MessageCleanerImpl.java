@@ -11,20 +11,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class MessageCleanerImpl implements MessageCleaner {
 
-    @Override
-    public void clean(TextChannel ch, int amount, @Nullable User author) {
-        if (amount < 0) {
-            throw new IllegalArgumentException("amount must be positive");
-        }
-        PaginationAction<Message, MessagePaginationAction>.PaginationIterator it = ch.getIterableHistory().iterator();
-        for (int i = 0; i < amount; i++) {
-            if (!it.hasNext()) {
-                break;
-            }
-            Message m = it.next();
-            if (author == null || m.getAuthor().equals(author)) {
-                m.delete().queue();
-            }
-        }
-    }
+	@Override
+	public void clean(TextChannel ch, int amount, @Nullable User author) {
+		if (amount < 0) {
+			throw new IllegalArgumentException("amount must be positive");
+		}
+		PaginationAction<Message, MessagePaginationAction>.PaginationIterator it = ch.getIterableHistory().iterator();
+		for (int i = 0; i < amount; i++) {
+			if (!it.hasNext()) {
+				break;
+			}
+			Message m = it.next();
+			if (author == null || m.getAuthor().equals(author)) {
+				m.delete().queue();
+			}
+		}
+	}
 }

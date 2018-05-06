@@ -17,24 +17,24 @@
 package component.modules.bomb;
 
 public enum WireColors {
-    STEELBLUE("SteelBlue"), SNOW("Snow"), PURPLE("Purple"), LIGHTPINK("LightPink"), GOLDENROD("GoldenRod"), BEIGE(
-            "Beige"), GREEN("Green"), YELLOW("Yellow"), RED("Red"), BLUE("Blue"), PINK("Pink"), MAGENTA(
-            "Magenta"), WHITE("White"), BLACK("Black"), ORANGE("Orange"), AVOCADO("Avocado"), LAVENDER(
-            "Lavender"), TEAL("Teal"), BROWN("Brown"), OLIVE("Olive"), MAROON("Maroon"), LIME(
-            "Lime"), CYAN("Cyan"), NAVY("Navy"), CORAL("Coral"), GREY("Grey"), MINT(
-            "Mint"), POOPBROWN("PoopBrown"), THISWIREWILLKILLYOU("ThisWireWillKillYou");
-    private final String color;
+	STEELBLUE("SteelBlue"), SNOW("Snow"), PURPLE("Purple"), LIGHTPINK("LightPink"), GOLDENROD("GoldenRod"), BEIGE(
+			"Beige"), GREEN("Green"), YELLOW("Yellow"), RED("Red"), BLUE("Blue"), PINK("Pink"), MAGENTA(
+					"Magenta"), WHITE("White"), BLACK("Black"), ORANGE("Orange"), AVOCADO("Avocado"), LAVENDER(
+							"Lavender"), TEAL("Teal"), BROWN("Brown"), OLIVE("Olive"), MAROON("Maroon"), LIME(
+									"Lime"), CYAN("Cyan"), NAVY("Navy"), CORAL("Coral"), GREY("Grey"), MINT(
+											"Mint"), POOPBROWN("PoopBrown"), THISWIREWILLKILLYOU("ThisWireWillKillYou");
+	private final String color;
 
-    WireColors(String color) {
-        this.color = color;
-    }
+	WireColors(String color) {
+		this.color = color;
+	}
 
-    @Override
-    public String toString() {
-        return color;
-    }
+	@Override
+	public String toString() {
+		return color;
+	}
 
-    public String getColor() {
-        return color;
-    }
+	public String getColor() {
+		return color;
+	}
 }

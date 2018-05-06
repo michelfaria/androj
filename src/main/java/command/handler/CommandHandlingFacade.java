@@ -21,45 +21,44 @@ import java.util.function.Supplier;
 @Getter
 public class CommandHandlingFacade {
 
-    private TextFormatter textFormatter;
-    private String cmdId;
-    private ValidationFailureHandler validationFailureHandler;
-    private List<Validator> validators;
-    private Replier replier;
-    private Supplier<String> syntaxSupplier;
-    private ValidatedCommandHandler validatedCommandHandler;
+	private TextFormatter textFormatter;
+	private String cmdId;
+	private ValidationFailureHandler validationFailureHandler;
+	private List<Validator> validators;
+	private Replier replier;
+	private Supplier<String> syntaxSupplier;
+	private ValidatedCommandHandler validatedCommandHandler;
 
-    public void handle(Command c) {
-        if (c.getId().equalsIgnoreCase(cmdId)) {
-            final List<String> validationErrors = applyValidations(c);
-            if (validationErrors.size() > 0) {
-                validationFailureHandler.accept(c, validationErrors);
-            } else {
-                try {
-                    validatedCommandHandler.accept(c);
-                } catch (InsufficientPermissionException ex) {
-                    replier.replyTo(c, "I don't have permission to do that :( I need permission to: " + ex.getPermission().getName() + ".");
-                } catch (Exception ex) {
-                    replier.replyTo(c.getEvent().getMessage(),
-                            "An internal error occurred. Please report to the bot owner.");
-                    ex.printStackTrace();
-                }
-            }
-        }
-    }
+	public void handle(Command c) {
+		if (c.getId().equalsIgnoreCase(cmdId)) {
+			final List<String> validationErrors = applyValidations(c);
+			if (validationErrors.size() > 0) {
+				validationFailureHandler.accept(c, validationErrors);
+			} else {
+				try {
+					validatedCommandHandler.accept(c);
+				} catch (InsufficientPermissionException ex) {
+					replier.replyTo(c, "I don't have permission to do that :( I need permission to: "
+							+ ex.getPermission().getName() + ".");
+				} catch (Exception ex) {
+					replier.replyTo(c.getEvent().getMessage(),
+							"An internal error occurred. Please report to the bot owner.");
+					ex.printStackTrace();
+				}
+			}
+		}
+	}
 
-    protected List<String> applyValidations(Command c) {
-        Objects.requireNonNull(validators);
-        return validators.stream()
-                .map(v -> v.validate(c))
-                .reduce(new ArrayList<>(), (a, b) -> {
-                    a.addAll(b);
-                    return a;
-                });
-    }
+	protected List<String> applyValidations(Command c) {
+		Objects.requireNonNull(validators);
+		return validators.stream().map(v -> v.validate(c)).reduce(new ArrayList<>(), (a, b) -> {
+			a.addAll(b);
+			return a;
+		});
+	}
 
-    protected RestAction<Void> sendTyping(TextChannel ch) {
-        return ch.sendTyping();
-    }
+	protected RestAction<Void> sendTyping(TextChannel ch) {
+		return ch.sendTyping();
+	}
 
 }

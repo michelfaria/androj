@@ -1,7 +1,7 @@
 package component.listeners;
 
 public interface BotListener {
-    default int priority() {
-        return 0;
-    }
+	default int priority() {
+		return 0;
+	}
 }

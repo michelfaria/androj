@@ -11,17 +11,17 @@ import java.util.Random;
 @Component
 public class SmartCommandHandler extends SubredditCommandHandler implements RegisteredCommandHandler {
 
-    @Autowired
-    public SmartCommandHandler(RedditClientWrapper reddit, CommandHandlingFacadeBuilder builder) {
-        this(reddit, builder, new Random());
-    }
+	@Autowired
+	public SmartCommandHandler(RedditClientWrapper reddit, CommandHandlingFacadeBuilder builder) {
+		this(reddit, builder, new Random());
+	}
 
-    public SmartCommandHandler(RedditClientWrapper reddit, CommandHandlingFacadeBuilder builder, Random random) {
-        super("smart", reddit, builder, random, Arrays.asList("iamverysmart"));
-    }
+	public SmartCommandHandler(RedditClientWrapper reddit, CommandHandlingFacadeBuilder builder, Random random) {
+		super("smart", reddit, builder, random, Arrays.asList("iamverysmart"));
+	}
 
-    @Override
-    public String help() {
-        return "You need an IQ of over 300 to use this command.";
-    }
+	@Override
+	public String help() {
+		return "You need an IQ of over 300 to use this command.";
+	}
 }

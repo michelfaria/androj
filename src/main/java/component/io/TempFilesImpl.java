@@ -16,32 +16,28 @@ import java.util.UUID;
 @Component
 public class TempFilesImpl implements TempFiles {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TempFilesImpl.class);
-    private File tempDir;
+	private static final Logger LOGGER = LoggerFactory.getLogger(TempFilesImpl.class);
+	private File tempDir;
 
-    @Autowired
-    public TempFilesImpl() {
-    }
+	@Autowired
+	public TempFilesImpl() {
+	}
 
-    @PostConstruct
-    public void init() throws IOException {
-        tempDir = Files.createTempDirectory("androj").toFile();
-        LOGGER.info("Created temporary directory: " + tempDir);
-    }
+	@PostConstruct
+	public void init() throws IOException {
+		tempDir = Files.createTempDirectory("androj").toFile();
+		LOGGER.info("Created temporary directory: " + tempDir);
+	}
 
-    @Override
-    public File create(byte[] content) throws IOException {
-        File file = File.createTempFile("temp", ".tmp", tempDir);
-        Files.write(file.toPath(), content);
-        return file;
-    }
+	@Override
+	public File create(byte[] content) throws IOException {
+		File file = File.createTempFile("temp", ".tmp", tempDir);
+		Files.write(file.toPath(), content);
+		return file;
+	}
 
-    @Override
-    public Path tempPath() {
-        return Paths.get(
-                tempDir.getPath(),
-                UUID.randomUUID()
-                        .toString()
-                        .replaceAll("-", ""));
-    }
+	@Override
+	public Path tempPath() {
+		return Paths.get(tempDir.getPath(), UUID.randomUUID().toString().replaceAll("-", ""));
+	}
 }

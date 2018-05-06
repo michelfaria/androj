@@ -10,15 +10,15 @@ import java.util.Map;
 @Component
 public class LatestImageServiceImpl implements LatestImageService {
 
-    private final Map<MessageChannel, Icon> channelLastImageMap = new HashMap<>();
+	private final Map<MessageChannel, Icon> channelLastImageMap = new HashMap<>();
 
-    @Override
-    public Icon put(MessageChannel key, Icon value) {
-        return channelLastImageMap.put(key, value);
-    }
+	@Override
+	public Icon put(MessageChannel key, Icon value) {
+		return channelLastImageMap.put(key, value);
+	}
 
-    @Override
-    public Icon get(MessageChannel key) {
-        return channelLastImageMap.get(key);
-    }
+	@Override
+	public Icon get(MessageChannel key) {
+		return channelLastImageMap.get(key);
+	}
 }

@@ -1,6 +1,5 @@
 package component.modules.wiki;
 
-
 import command.Command;
 import command.handler.AbstractCommandHandler;
 import command.handler.CommandHandlingFacade;
@@ -22,50 +21,43 @@ import java.util.Random;
 @ConditionalOnBean(WikiConfig.class)
 public class WikiCommandHandler extends AbstractCommandHandler implements RegisteredCommandHandler {
 
-    private static final List<String> decorators = Arrays.asList(":earth_africa:", ":earth_americas:", ":earth_asia:");
+	private static final List<String> decorators = Arrays.asList(":earth_africa:", ":earth_americas:", ":earth_asia:");
 
-    private Wikipedia wikipedia;
-    private CommandHandlingFacade facade;
+	private Wikipedia wikipedia;
+	private CommandHandlingFacade facade;
 
-    @Autowired
-    public WikiCommandHandler(CommandHandlingFacadeBuilder builder, Wikipedia wikipedia) {
-        this(builder, wikipedia, new Random());
-    }
+	@Autowired
+	public WikiCommandHandler(CommandHandlingFacadeBuilder builder, Wikipedia wikipedia) {
+		this(builder, wikipedia, new Random());
+	}
 
-    public WikiCommandHandler(CommandHandlingFacadeBuilder builder, Wikipedia wikipedia, Random random) {
-        this.wikipedia = wikipedia;
-        this.facade = builder
-                .setCmdId("wiki")
-                .setValidatedCommandHandler(this::handle_)
-                .setReplier(new SuppliedDecorationReplier(() -> decorators.get(random.nextInt(decorators.size()))))
-                .setSyntaxSupplier(() -> "<term>")
-                .setValidators(Arrays.asList(new MinArgsValidator(1)))
-                .build();
-    }
+	public WikiCommandHandler(CommandHandlingFacadeBuilder builder, Wikipedia wikipedia, Random random) {
+		this.wikipedia = wikipedia;
+		this.facade = builder.setCmdId("wiki").setValidatedCommandHandler(this::handle_)
+				.setReplier(new SuppliedDecorationReplier(() -> decorators.get(random.nextInt(decorators.size()))))
+				.setSyntaxSupplier(() -> "<term>").setValidators(Arrays.asList(new MinArgsValidator(1))).build();
+	}
 
-    private void handle_(Command c) {
-        String term = String.join(" ", c.getArgs());
-        try {
-            WikipediaResponse wikipediaResponse = wikipedia.lookup(term);
-            replyTo(c,
-                    wikipediaResponse.getSummary() + "\n\nSee more at: "
-                            + wikipediaResponse.getUrl());
-        } catch (FileNotFoundException e) {
-            replyTo(c, "Could not find a Wikipedia page on that.");
-        }
-        catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+	private void handle_(Command c) {
+		String term = String.join(" ", c.getArgs());
+		try {
+			WikipediaResponse wikipediaResponse = wikipedia.lookup(term);
+			replyTo(c, wikipediaResponse.getSummary() + "\n\nSee more at: " + wikipediaResponse.getUrl());
+		} catch (FileNotFoundException e) {
+			replyTo(c, "Could not find a Wikipedia page on that.");
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-    @NotNull
-    @Override
-    public CommandHandlingFacade getFacade() {
-        return facade;
-    }
+	@NotNull
+	@Override
+	public CommandHandlingFacade getFacade() {
+		return facade;
+	}
 
-    @Override
-    public String help() {
-        return "Search Wikipedia.";
-    }
+	@Override
+	public String help() {
+		return "Search Wikipedia.";
+	}
 }

@@ -9,12 +9,11 @@ import net.dean.jraw.models.Submission;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RedditResponse {
-    private String link;
-    private String title;
-    private String selfText;
+	private String link;
+	private String title;
+	private String selfText;
 
-    public static RedditResponse fromSubmission(Submission submission) {
-        return new RedditResponse(
-                submission.getTitle(), submission.getUrl(), submission.getSelfText());
-    }
+	public static RedditResponse fromSubmission(Submission submission) {
+		return new RedditResponse(submission.getTitle(), submission.getUrl(), submission.getSelfText());
+	}
 }

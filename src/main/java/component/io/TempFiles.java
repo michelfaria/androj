@@ -7,17 +7,15 @@ import java.util.Base64;
 
 public interface TempFiles {
 
-    default File createDecodeBase64(String content) throws IOException {
-        return create(Base64
-                .getDecoder()
-                .decode(content));
-    }
+	default File createDecodeBase64(String content) throws IOException {
+		return create(Base64.getDecoder().decode(content));
+	}
 
-    default File create(String content) throws IOException {
-        return create(content.getBytes());
-    }
+	default File create(String content) throws IOException {
+		return create(content.getBytes());
+	}
 
-    File create(byte[] content) throws IOException;
+	File create(byte[] content) throws IOException;
 
-    Path tempPath();
+	Path tempPath();
 }

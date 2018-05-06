@@ -10,17 +10,15 @@ import org.springframework.stereotype.Component;
 @ConditionalOnBean(RedditClient.class)
 public class RedditClientWrapper {
 
-    private final RedditClient redditClient;
+	private final RedditClient redditClient;
 
-    @Autowired
-    public RedditClientWrapper(RedditClient redditClient) {
-        this.redditClient = redditClient;
-    }
+	@Autowired
+	public RedditClientWrapper(RedditClient redditClient) {
+		this.redditClient = redditClient;
+	}
 
-    public RedditResponse fetchRandomPost(String subreddit) {
-        Submission submission = redditClient.subreddit(subreddit)
-                .randomSubmission()
-                .getSubject();
-        return new RedditResponse(submission.getUrl(), submission.getTitle(), submission.getSelfText());
-    }
+	public RedditResponse fetchRandomPost(String subreddit) {
+		Submission submission = redditClient.subreddit(subreddit).randomSubmission().getSubject();
+		return new RedditResponse(submission.getUrl(), submission.getTitle(), submission.getSelfText());
+	}
 }

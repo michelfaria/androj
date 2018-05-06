@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class WikipediaResponse {
-    private String summary;
-    private String url;
+	private String summary;
+	private String url;
 }
