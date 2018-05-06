@@ -6,12 +6,16 @@ import command.handler.CommandHandlingFacade;
 import command.handler.RegisteredCommandHandler;
 import command.validation.IntArgValidator;
 import command.validation.MaxArgsValidator;
+import component.command.validation.permission.GuildPermissionValidator;
+import component.command.validation.permission.GuildPermissionValidatorBuilder;
 import component.command.CommandHandlingFacadeBuilder;
+import net.dv8tion.jda.core.Permission;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 @Component
 public class SelfCleaningCommandHandler extends AbstractCommandHandler implements RegisteredCommandHandler {
@@ -20,9 +24,14 @@ public class SelfCleaningCommandHandler extends AbstractCommandHandler implement
     private MessageCleaner messageCleaner;
 
     @Autowired
-    public SelfCleaningCommandHandler(CommandHandlingFacadeBuilder builder, MessageCleaner messageCleaner) {
+    public SelfCleaningCommandHandler(CommandHandlingFacadeBuilder builder, MessageCleaner messageCleaner,
+                                      GuildPermissionValidatorBuilder permissionValidatorBuilder) {
+        GuildPermissionValidator permissionValidator = permissionValidatorBuilder
+                .setRequiredPermissions(Collections.singletonList(Permission.MESSAGE_MANAGE))
+                .build();
         this.facade = builder.setCmdId("cleanup")
                 .setValidators(Arrays.asList(
+                        permissionValidator,
                         new MaxArgsValidator(1),
                         new IntArgValidator(0, IntArgValidator.Enforce.POSITIVE, () -> "Please specify the amount of my messages that you want to clean!")))
                 .setSyntaxSupplier(() -> "[amount]")
