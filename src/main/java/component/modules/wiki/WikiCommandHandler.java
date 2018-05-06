@@ -25,7 +25,6 @@ public class WikiCommandHandler extends AbstractCommandHandler implements Regist
     private static final List<String> decorators = Arrays.asList(":earth_africa:", ":earth_americas:", ":earth_asia:");
 
     private Wikipedia wikipedia;
-    private Random random;
     private CommandHandlingFacade facade;
 
     @Autowired
@@ -35,7 +34,6 @@ public class WikiCommandHandler extends AbstractCommandHandler implements Regist
 
     public WikiCommandHandler(CommandHandlingFacadeBuilder builder, Wikipedia wikipedia, Random random) {
         this.wikipedia = wikipedia;
-        this.random = random;
         this.facade = builder
                 .setCmdId("wiki")
                 .setValidatedCommandHandler(this::handle_)
@@ -64,5 +62,10 @@ public class WikiCommandHandler extends AbstractCommandHandler implements Regist
     @Override
     public CommandHandlingFacade getFacade() {
         return facade;
+    }
+
+    @Override
+    public String help() {
+        return "Search Wikipedia.";
     }
 }
