@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -22,6 +23,7 @@ public class CommandHandlingFacadeBuilder {
 
 	private TextFormatter textFormatter;
 	private String cmdId;
+	private List<String> aliases;
 	private ValidationFailureHandler validationFailureHandler;
 	private List<Validator> validators = Collections.emptyList();
 	private Replier replier;
@@ -49,9 +51,12 @@ public class CommandHandlingFacadeBuilder {
 		if (validators == null) {
 			validators = Collections.emptyList();
 		}
+		if (aliases == null) {
+			aliases = new ArrayList<>();
+		}
 		Objects.requireNonNull(validatedCommandHandler);
 
-		return new CommandHandlingFacade(textFormatter, cmdId, validationFailureHandler, validators, replier,
+		return new CommandHandlingFacade(textFormatter, cmdId, aliases, validationFailureHandler, validators, replier,
 				syntaxSupplier, validatedCommandHandler);
 	}
 
@@ -115,6 +120,15 @@ public class CommandHandlingFacadeBuilder {
 
 	public CommandHandlingFacadeBuilder setValidatedCommandHandler(ValidatedCommandHandler validatedCommandHandler) {
 		this.validatedCommandHandler = validatedCommandHandler;
+		return this;
+	}
+
+	public List<String> getAliases() {
+		return aliases;
+	}
+
+	public CommandHandlingFacadeBuilder setAliases(List<String> aliases) {
+		this.aliases = aliases;
 		return this;
 	}
 }

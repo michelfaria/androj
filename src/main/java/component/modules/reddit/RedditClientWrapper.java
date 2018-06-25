@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConditionalOnBean(RedditClient.class)
+@ConditionalOnBean(RedditConfig.class)
 public class RedditClientWrapper {
 
 	private final RedditClient redditClient;

@@ -13,22 +13,25 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
 
 @Component
 @ConditionalOnBean(BombConfig.class)
 public class CutWireCommandHandler extends AbstractCommandHandler implements RegisteredCommandHandler {
 
-	public static final String NOT_VALID_COLOR = "THAT'S NOT A VALID COLOR! HURRY! PICK A VALID COLOR!";
-	public static final String NO_BOMB = "You don't have a bomb, lol.";
+	private static final String NOT_VALID_COLOR = "THAT'S NOT A VALID COLOR! HURRY! PICK A VALID COLOR!";
+	private static final String NO_BOMB = "You don't have a bomb, lol.";
 
 	private CommandHandlingFacade facade;
 	private BombService bombService;
 
 	@Autowired
 	public CutWireCommandHandler(CommandHandlingFacadeBuilder builder, BombService bombService) {
-		this.facade = builder.setCmdId("cutwire").setReplier(new DecoratedReplier(":scissors:"))
-				.setSyntaxSupplier(() -> "<color>").setValidators(Arrays.asList(new ArgLengthValidator(1)))
+		this.facade = builder.setCmdId("cutwire")
+				.setAliases(Collections.singletonList("cut"))
+				.setReplier(new DecoratedReplier(":scissors:"))
+				.setSyntaxSupplier(() -> "<color>").setValidators(Collections.singletonList(new ArgLengthValidator(1)))
 				.setValidatedCommandHandler(this::handle_).build();
 		this.bombService = bombService;
 	}

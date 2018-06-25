@@ -23,6 +23,7 @@ public class CommandHandlingFacade {
 
 	private TextFormatter textFormatter;
 	private String cmdId;
+	private List<String> aliases;
 	private ValidationFailureHandler validationFailureHandler;
 	private List<Validator> validators;
 	private Replier replier;
@@ -30,7 +31,7 @@ public class CommandHandlingFacade {
 	private ValidatedCommandHandler validatedCommandHandler;
 
 	public void handle(Command c) {
-		if (c.getId().equalsIgnoreCase(cmdId)) {
+		if (commandMatchesIdOrAlias(c)) {
 			final List<String> validationErrors = applyValidations(c);
 			if (validationErrors.size() > 0) {
 				validationFailureHandler.accept(c, validationErrors);
@@ -47,6 +48,11 @@ public class CommandHandlingFacade {
 				}
 			}
 		}
+	}
+
+	private boolean commandMatchesIdOrAlias(Command c) {
+		return c.getId().equalsIgnoreCase(cmdId)
+				|| aliases.stream().anyMatch(alias -> c.getId().equalsIgnoreCase(alias));
 	}
 
 	protected List<String> applyValidations(Command c) {
