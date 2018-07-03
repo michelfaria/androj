@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +20,9 @@ public class BotConfig {
 
 	@Value("${bot.prefix}")
 	private String prefix;
+
+	@Value("${bot.name:Goatbot}")
+	private String botName;
 
 	private List<String> admins;
 
