@@ -4,19 +4,20 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import command.Command;
 
+
+
 class IntArgValidatorTest {
 
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	void invalidPosition_ThrowsException() {
-		assertThrows(IllegalArgumentException.class, () -> new IntArgValidator(-1));
+		new IntArgValidator(-1);
 	}
 
 	@Test
