@@ -34,3 +34,14 @@
 	bot.bomb.minTimeMs=<int> (Default: 60_000)
 	bot.bomb.minWires=<int> (Default: 2)
 	bot.bomb.maxWires=<int> (Default: 6)
+
+## Running
+
+To run the bot, you can run it with Spring Boot. The below command will compile all of the source code
+run the bot.
+
+	mvn spring-boot:run
+	
+## License
+
+This project is licensed under GPLv3. For more information, see LICENSE.
